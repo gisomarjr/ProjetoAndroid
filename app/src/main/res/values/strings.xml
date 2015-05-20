@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ExemploLivros</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_detalhe_livro">Detalhe</string>
+    <string name="favorito">Favorito</string>
+
+    <string name="tab_livros">Livros</string>
+    <string name="tab_favoritos">Favoritos</string>
+</resources>
