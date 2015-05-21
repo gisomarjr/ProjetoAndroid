@@ -46,11 +46,10 @@ public class FavoritosFragment extends Fragment
                 cursor.moveToPosition(i);
 
                 Livro livro = new Livro();
-                /*livro.titulo = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_TITULO));
-                livro.ano = cursor.getInt(cursor.getColumnIndex(LivrosDbHelper.CAMPO_ANO));
-                livro.autor = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_AUTOR));
-                livro.capa = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_CAPA));
-                livro.paginas = cursor.getInt(cursor.getColumnIndex(LivrosDbHelper.CAMPO_PAGINAS));*/
+                livro.volumes.titulo = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_TITULO));
+                livro.volumes.dataPublicacao = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_DATA_PUBLICACAO));
+                livro.volumes.urlImagens.urlImagem = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_CAPA));
+
 
                 if (getActivity() instanceof AoClicarNoLivroListener) {
                     ((AoClicarNoLivroListener)getActivity()).onLivroClick(livro);

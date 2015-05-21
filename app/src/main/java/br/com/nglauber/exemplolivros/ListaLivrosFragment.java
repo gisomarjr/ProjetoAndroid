@@ -37,7 +37,6 @@ import br.com.nglauber.exemplolivros.model.Volume;
 public class ListaLivrosFragment extends Fragment {
 
     ListView listView;
-    Editora editora;
     Itens itens;
     DownloadLivrosTask task;
     ProgressDialog progressDialog;

@@ -14,4 +14,9 @@ public class Livro implements Serializable {
 
     @SerializedName("volumeInfo")
     public Volume volumes;
+
+    @SerializedName("saleInfo")
+    public Venda venda;
+
+
 }

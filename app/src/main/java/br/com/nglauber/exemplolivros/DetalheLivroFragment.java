@@ -86,18 +86,18 @@ public class DetalheLivroFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_favorito) {
+
             ContentValues values = new ContentValues();
-           /* values.put(LivrosDbHelper.CAMPO_TITULO, livro.titulo);
-            values.put(LivrosDbHelper.CAMPO_ANO, livro.ano);
-            values.put(LivrosDbHelper.CAMPO_AUTOR, livro.autor);
-            values.put(LivrosDbHelper.CAMPO_PAGINAS, livro.paginas);
-            values.put(LivrosDbHelper.CAMPO_CAPA, livro.capa);
+
+            values.put(LivrosDbHelper.CAMPO_TITULO, livro.volumes.titulo);
+            values.put(LivrosDbHelper.CAMPO_DATA_PUBLICACAO, livro.volumes.dataPublicacao);
+            values.put(LivrosDbHelper.CAMPO_CAPA, livro.volumes.urlImagens.urlImagem);
 
             if (isFavorito(this.livro)) {
                 getActivity().getContentResolver().delete(
                         Uri.parse(LivrosDbHelper.ENDERECO_PROVIDER),
                         LivrosDbHelper.CAMPO_TITULO +" = ?",
-                        new String[]{ String.valueOf(livro.titulo) }
+                        new String[]{ String.valueOf(livro.volumes.titulo) }
                 );
             } else {
                 getActivity().getContentResolver().insert(
@@ -106,23 +106,22 @@ public class DetalheLivroFragment extends Fragment {
             }
             getActivity().invalidateOptionsMenu();
             return true;
-        */
+
 
         }
         return super.onOptionsItemSelected(item);
     }
 
     private boolean isFavorito(Livro livro) {
-        /*Cursor cursor = getActivity().getContentResolver().query(
+        Cursor cursor = getActivity().getContentResolver().query(
                 Uri.parse(LivrosDbHelper.ENDERECO_PROVIDER),
                         new String[]{ LivrosDbHelper.CAMPO_ID },
                         LivrosDbHelper.CAMPO_TITULO +" = ?",
-                        new String[]{ livro.titulo },
+                        new String[]{ livro.volumes.titulo },
                         null);
         boolean existe = cursor.moveToNext();
         cursor.close();
         return existe;
-    }*/
-        return true;
+
     }
 }

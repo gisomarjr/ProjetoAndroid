@@ -31,7 +31,7 @@ public class LivroCursorAdapter extends CursorAdapter {
         ImageView imgCapa = (ImageView)view.findViewById(R.id.imgCapa);
 
         txtTitulo.setText(cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_TITULO)));
-        txtAno.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex(LivrosDbHelper.CAMPO_ANO))));
+        txtAno.setText(String.valueOf(cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_DATA_PUBLICACAO))));
         Picasso.with(context)
                 .load(cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_CAPA)))
                 .into(imgCapa);
