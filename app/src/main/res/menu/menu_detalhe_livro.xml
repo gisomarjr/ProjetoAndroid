@@ -9,6 +9,11 @@
         android:title="@string/favorito"
         app:showAsAction="always|withText" />
 
+    <item
+        android:id="@+id/action_venda"
+        android:orderInCategory="100"
+        android:title="venda"
+        app:showAsAction="always|withText" />
 
 
 </menu>

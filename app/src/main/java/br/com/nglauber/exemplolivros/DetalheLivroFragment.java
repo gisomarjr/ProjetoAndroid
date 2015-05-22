@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -26,6 +27,7 @@ public class DetalheLivroFragment extends Fragment {
     private Livro livro;
     private Volume volume;
     private MenuItem menuItem;
+    private MenuItem menuItemVenda;
 
     public static DetalheLivroFragment novaInstancia(Livro livro){
         DetalheLivroFragment dlf = new DetalheLivroFragment();
@@ -76,11 +78,30 @@ public class DetalheLivroFragment extends Fragment {
         inflater.inflate(R.menu.menu_detalhe_livro, menu);
 
         menuItem = menu.findItem(R.id.action_favorito);
+        menuItemVenda = menu.findItem(R.id.action_venda);
+
         if (isFavorito(this.livro)){
             menuItem.setIcon(R.drawable.ic_action_add_favorite);
         } else {
             menuItem.setIcon(R.drawable.ic_action_remove_favorito);
         }
+
+
+        switch (livro.venda.status){
+            case "FOR_SALE":
+                menuItemVenda.setTitle("Disponível para Compra");
+                break;
+            case "FREE":
+                menuItemVenda.setTitle("Disponível Gratis");
+                break;
+            case "NOT_FOR_SALE":
+                menuItemVenda.setTitle("Indisponível para Compra");
+                break;
+            default:
+                menuItemVenda.setTitle("Não Informado");
+        }
+
+
     }
 
     @Override
@@ -118,12 +139,30 @@ public class DetalheLivroFragment extends Fragment {
         Cursor cursor = getActivity().getContentResolver().query(
                 Uri.parse(LivrosDbHelper.ENDERECO_PROVIDER),
                         new String[]{ LivrosDbHelper.CAMPO_ID },
+
                         LivrosDbHelper.CAMPO_TITULO +" = ?",
-                        new String[]{ livro.volumes.titulo },
+
+                        new String[]{ livro.volumes.titulo},
                         null);
         boolean existe = cursor.moveToNext();
         cursor.close();
         return existe;
 
     }
+
+    /*private boolean isFavorito(Livro livro) {
+        Cursor cursor = getActivity().getContentResolver().query(
+                Uri.parse(LivrosDbHelper.ENDERECO_PROVIDER),
+                new String[]{ LivrosDbHelper.CAMPO_ID },
+
+                LivrosDbHelper.CAMPO_TITULO +" = ? and "  +
+                        LivrosDbHelper.CAMPO_DATA_PUBLICACAO + " = ?",
+
+                new String[]{ livro.volumes.titulo,"" },
+                null);
+        boolean existe = cursor.moveToNext();
+        cursor.close();
+        return existe;
+
+    }*/
 }
