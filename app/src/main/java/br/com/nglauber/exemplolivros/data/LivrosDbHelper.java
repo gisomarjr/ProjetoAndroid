@@ -18,6 +18,8 @@ public class LivrosDbHelper extends SQLiteOpenHelper {
     public static final String CAMPO_CAPA = "capa";
     public static final String CAMPO_DESCRICAO = "descricao";
     public static final String CAMPO_URL_LIVRO = "url";
+    public static final String CAMPO_VENDA_STATUS = "statusVenda";
+    public static final String CAMPO_VENDA_LINK = "linkVenda";
 
     public LivrosDbHelper(Context context) {
         super(context, NOME_DO_BANCO, null, VERSAO_DO_BANCO);
@@ -32,6 +34,8 @@ public class LivrosDbHelper extends SQLiteOpenHelper {
                         CAMPO_DATA_PUBLICACAO     +" TEXT," +
                         CAMPO_DESCRICAO     +" TEXT," +
                         CAMPO_URL_LIVRO     +" TEXT," +
+                        CAMPO_VENDA_LINK     +" TEXT," +
+                        CAMPO_VENDA_STATUS     +" TEXT," +
                         CAMPO_CAPA    +" TEXT)"
         );
     }

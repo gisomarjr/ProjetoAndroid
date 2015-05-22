@@ -17,6 +17,7 @@ import android.widget.ListView;
 import br.com.nglauber.exemplolivros.data.LivrosDbHelper;
 import br.com.nglauber.exemplolivros.model.Imagens;
 import br.com.nglauber.exemplolivros.model.Livro;
+import br.com.nglauber.exemplolivros.model.Venda;
 import br.com.nglauber.exemplolivros.model.Volume;
 
 //LoaderManager busca em background
@@ -50,13 +51,17 @@ public class FavoritosFragment extends Fragment
                 Livro livro = new Livro();
                 Volume volume = new Volume();
                 Imagens imagem = new Imagens();
+                Venda venda = new Venda();
 
                 volume.titulo = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_TITULO));
                 volume.informacaoLink = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_URL_LIVRO));
                 volume.descricao = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_DESCRICAO));
                 volume.dataPublicacao = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_DATA_PUBLICACAO));
                 imagem.urlImagem = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_CAPA));
+                venda.status = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_VENDA_STATUS));
+                venda.linkVenda = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_VENDA_LINK));
 
+                livro.venda = venda;
                 livro.volumes = volume;
                 livro.volumes.urlImagens = imagem;
 

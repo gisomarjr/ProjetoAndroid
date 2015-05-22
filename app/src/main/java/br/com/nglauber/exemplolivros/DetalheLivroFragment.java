@@ -136,6 +136,9 @@ public class DetalheLivroFragment extends Fragment {
             values.put(LivrosDbHelper.CAMPO_CAPA, livro.volumes.urlImagens.urlImagem);
             values.put(LivrosDbHelper.CAMPO_DESCRICAO, livro.volumes.descricao);
             values.put(LivrosDbHelper.CAMPO_URL_LIVRO, livro.volumes.informacaoLink);
+            //SALVAR INFORMAÇÕES TAMBÉM DE VENDA DO LIVRO
+            values.put(LivrosDbHelper.CAMPO_VENDA_LINK, livro.venda.linkVenda);
+            values.put(LivrosDbHelper.CAMPO_VENDA_STATUS, livro.venda.status);
 
             if (isFavorito(this.livro)) {
                 getActivity().getContentResolver().delete(
