@@ -92,6 +92,8 @@ public class DetalheLivroFragment extends Fragment {
             values.put(LivrosDbHelper.CAMPO_TITULO, livro.volumes.titulo);
             values.put(LivrosDbHelper.CAMPO_DATA_PUBLICACAO, livro.volumes.dataPublicacao);
             values.put(LivrosDbHelper.CAMPO_CAPA, livro.volumes.urlImagens.urlImagem);
+            values.put(LivrosDbHelper.CAMPO_DESCRICAO, livro.volumes.descricao);
+            values.put(LivrosDbHelper.CAMPO_URL_LIVRO, livro.volumes.informacaoLink);
 
             if (isFavorito(this.livro)) {
                 getActivity().getContentResolver().delete(

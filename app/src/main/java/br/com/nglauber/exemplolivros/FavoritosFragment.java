@@ -52,6 +52,8 @@ public class FavoritosFragment extends Fragment
                 Imagens imagem = new Imagens();
 
                 volume.titulo = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_TITULO));
+                volume.informacaoLink = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_URL_LIVRO));
+                volume.descricao = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_DESCRICAO));
                 volume.dataPublicacao = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_DATA_PUBLICACAO));
                 imagem.urlImagem = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_CAPA));
 

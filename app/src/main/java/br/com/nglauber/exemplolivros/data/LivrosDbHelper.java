@@ -16,6 +16,8 @@ public class LivrosDbHelper extends SQLiteOpenHelper {
     public static final String CAMPO_TITULO = "titulo";
     public static final String CAMPO_DATA_PUBLICACAO = "dataPublicacao";
     public static final String CAMPO_CAPA = "capa";
+    public static final String CAMPO_DESCRICAO = "descricao";
+    public static final String CAMPO_URL_LIVRO = "url";
 
     public LivrosDbHelper(Context context) {
         super(context, NOME_DO_BANCO, null, VERSAO_DO_BANCO);
@@ -28,6 +30,8 @@ public class LivrosDbHelper extends SQLiteOpenHelper {
                         CAMPO_ID      +" INTEGER PRIMARY KEY AUTOINCREMENT," +
                         CAMPO_TITULO  +" TEXT NOT NULL UNIQUE," +
                         CAMPO_DATA_PUBLICACAO     +" TEXT," +
+                        CAMPO_DESCRICAO     +" TEXT," +
+                        CAMPO_URL_LIVRO     +" TEXT," +
                         CAMPO_CAPA    +" TEXT)"
         );
     }
