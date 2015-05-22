@@ -1,6 +1,7 @@
 package br.com.nglauber.exemplolivros;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -26,7 +26,7 @@ public class DetalheLivroFragment extends Fragment {
 
     private Livro livro;
     private Volume volume;
-    private MenuItem menuItem;
+    private MenuItem menuItemFavorito;
     private MenuItem menuItemVenda;
 
     public static DetalheLivroFragment novaInstancia(Livro livro){
@@ -77,22 +77,43 @@ public class DetalheLivroFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_detalhe_livro, menu);
 
-        menuItem = menu.findItem(R.id.action_favorito);
+        menuItemFavorito = menu.findItem(R.id.action_favorito);
         menuItemVenda = menu.findItem(R.id.action_venda);
 
         if (isFavorito(this.livro)){
-            menuItem.setIcon(R.drawable.ic_action_add_favorite);
+            menuItemFavorito.setIcon(R.drawable.ic_action_add_favorite);
         } else {
-            menuItem.setIcon(R.drawable.ic_action_remove_favorito);
+            menuItemFavorito.setIcon(R.drawable.ic_action_remove_favorito);
         }
 
 
         switch (livro.venda.status){
+
             case "FOR_SALE":
                 menuItemVenda.setTitle("Disponível para Compra");
+                menuItemVenda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        Intent intent = null;
+                        intent = new Intent(Intent.ACTION_VIEW,	Uri.parse(livro.venda.linkVenda));
+
+                        startActivity(intent);
+                        return false;
+                    }
+                });
                 break;
             case "FREE":
                 menuItemVenda.setTitle("Disponível Gratis");
+                menuItemVenda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        Intent intent = null;
+                        intent = new Intent(Intent.ACTION_VIEW,	Uri.parse(livro.venda.linkVenda));
+
+                        startActivity(intent);
+                        return false;
+                    }
+                });
                 break;
             case "NOT_FOR_SALE":
                 menuItemVenda.setTitle("Indisponível para Compra");
