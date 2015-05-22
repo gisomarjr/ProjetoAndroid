@@ -1,13 +1,11 @@
 package br.com.nglauber.exemplolivros;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,11 +25,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.nglauber.exemplolivros.model.Categoria;
-import br.com.nglauber.exemplolivros.model.Editora;
 import br.com.nglauber.exemplolivros.model.Itens;
 import br.com.nglauber.exemplolivros.model.Livro;
-import br.com.nglauber.exemplolivros.model.Volume;
 
 
 public class ListaLivrosFragment extends Fragment {

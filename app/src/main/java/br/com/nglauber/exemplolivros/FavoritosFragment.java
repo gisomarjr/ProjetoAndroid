@@ -15,9 +15,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import br.com.nglauber.exemplolivros.data.LivrosDbHelper;
+import br.com.nglauber.exemplolivros.model.Imagens;
 import br.com.nglauber.exemplolivros.model.Livro;
+import br.com.nglauber.exemplolivros.model.Volume;
 
-
+//LoaderManager busca em background
 public class FavoritosFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -46,10 +48,15 @@ public class FavoritosFragment extends Fragment
                 cursor.moveToPosition(i);
 
                 Livro livro = new Livro();
-                livro.volumes.titulo = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_TITULO));
-                livro.volumes.dataPublicacao = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_DATA_PUBLICACAO));
-                livro.volumes.urlImagens.urlImagem = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_CAPA));
+                Volume volume = new Volume();
+                Imagens imagem = new Imagens();
 
+                volume.titulo = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_TITULO));
+                volume.dataPublicacao = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_DATA_PUBLICACAO));
+                imagem.urlImagem = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_CAPA));
+
+                livro.volumes = volume;
+                livro.volumes.urlImagens = imagem;
 
                 if (getActivity() instanceof AoClicarNoLivroListener) {
                     ((AoClicarNoLivroListener)getActivity()).onLivroClick(livro);
