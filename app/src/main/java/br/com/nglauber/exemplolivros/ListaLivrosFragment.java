@@ -122,22 +122,14 @@ public class ListaLivrosFragment extends Fragment {
             }
         });
 
-        preencherLista();
+        //preencherLista();
         //Pesquisar no banco ---
 
-       /* if (itens == null){
-            if (task == null){
-                task = new DownloadLivrosTask();
-                task.execute("");
-            } else if (task.getStatus() == AsyncTask.Status.FINISHED){
-                preencherLista();
+        if (itens == null) {
+            if (task == null) {
+                Toast.makeText(getActivity(), "Para começar, clique na lupa e digite a busca.", Toast.LENGTH_LONG).show();
             }
-        } else {
-            preencherLista();
-        }*/
-
-
-
+        }
         return view;
     }
 

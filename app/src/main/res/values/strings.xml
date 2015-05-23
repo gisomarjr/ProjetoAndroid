@@ -6,4 +6,8 @@
 
     <string name="tab_livros">Livros</string>
     <string name="tab_favoritos">Favoritos</string>
+    <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="splash">Splash</string>
 </resources>
