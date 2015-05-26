@@ -2,9 +2,11 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">#3F51A5</item>
+        <!-- Customize your theme here.   <item name="colorPrimaryDark">#303F9F</item>-->
+        <item name="colorPrimary">#0D6C23</item>
         <item name="colorPrimaryDark">#303F9F</item>
+        <item name="android:windowContentOverlay">@null</item>
+
     </style>
     <style name="splashScreenTheme" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash</item>

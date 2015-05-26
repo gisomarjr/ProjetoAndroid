@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements AoClicarNoLivroLi
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(viewPager);
 
-        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setElevation(1);
     }
 
     @Override
