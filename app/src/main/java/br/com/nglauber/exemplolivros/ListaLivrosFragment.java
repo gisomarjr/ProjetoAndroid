@@ -37,6 +37,8 @@ public class ListaLivrosFragment extends Fragment {
     ProgressDialog progressDialog;
     static String mSavedName;
     private String searchedName;
+    static ArrayList<Livro> mListaLivros = new ArrayList<>();
+    public ArrayList<Livro> listaLivros;
     public ListaLivrosFragment() {
 
     }
@@ -48,6 +50,7 @@ public class ListaLivrosFragment extends Fragment {
         setRetainInstance(true);
         if(savedInstanceState != null){
             mSavedName = savedInstanceState.getString(searchedName);
+            mListaLivros = (ArrayList<Livro>)savedInstanceState.getSerializable("listalivros");
           //  text1.setText(savedName);
         }
 
@@ -137,9 +140,11 @@ public class ListaLivrosFragment extends Fragment {
             }
 
         }
-        if (mSavedName != null){
-            task = new DownloadLivrosTask();
-            task.execute(mSavedName);
+        if (mListaLivros != null){
+            listView.setAdapter(new LivrosAdapter(getActivity(), mListaLivros));
+       //   for ()
+          //  task = new DownloadLivrosTask();
+           // task.execute(mSavedName);
         }
         return view;
     }
@@ -184,17 +189,21 @@ public class ListaLivrosFragment extends Fragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the user's current game state
         savedInstanceState.putString(searchedName, mSavedName);
+
+        savedInstanceState.putSerializable("listalivros", (ArrayList<Livro>) mListaLivros);
        // savedInstanceState.putInt(STATE_LEVEL, mCurrentLevel);
 
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
     }
+
     private void preencherLista() {
         List<Livro> livros = new ArrayList<>();
         if(itens != null) {
             for (Livro livro : itens.livros) {
                 livros.add(livro);
+                mListaLivros.add(livro);
             }
         }else{
             Toast.makeText(getActivity(),"Não encontramos Resultados",Toast.LENGTH_LONG).show();
