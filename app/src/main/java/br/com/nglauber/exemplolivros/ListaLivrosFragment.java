@@ -35,7 +35,8 @@ public class ListaLivrosFragment extends Fragment {
     Itens itens;
     DownloadLivrosTask task;
     ProgressDialog progressDialog;
-
+    static String mSavedName;
+    private String searchedName;
     public ListaLivrosFragment() {
 
     }
@@ -45,6 +46,10 @@ public class ListaLivrosFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
+        if(savedInstanceState != null){
+            mSavedName = savedInstanceState.getString(searchedName);
+          //  text1.setText(savedName);
+        }
 
     }
 
@@ -63,7 +68,7 @@ public class ListaLivrosFragment extends Fragment {
 
                     task = new DownloadLivrosTask();
                     task.execute(pesquisaUsuario);
-
+                    mSavedName = pesquisaUsuario;
 
                 return false;
             }
@@ -119,6 +124,7 @@ public class ListaLivrosFragment extends Fragment {
                 if (getActivity() instanceof AoClicarNoLivroListener) {
                     ((AoClicarNoLivroListener)getActivity()).onLivroClick(livro);
                 }
+
             }
         });
 
@@ -129,6 +135,11 @@ public class ListaLivrosFragment extends Fragment {
             if (task == null) {
                 Toast.makeText(getActivity(), "Para começar, clique na lupa e digite a busca.", Toast.LENGTH_LONG).show();
             }
+
+        }
+        if (mSavedName != null){
+            task = new DownloadLivrosTask();
+            task.execute(mSavedName);
         }
         return view;
     }
@@ -169,7 +180,16 @@ public class ListaLivrosFragment extends Fragment {
             preencherLista();
         }
     }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putString(searchedName, mSavedName);
+       // savedInstanceState.putInt(STATE_LEVEL, mCurrentLevel);
 
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
     private void preencherLista() {
         List<Livro> livros = new ArrayList<>();
         if(itens != null) {
