@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,7 +52,7 @@ public class ListaLivrosFragment extends Fragment {
         if(savedInstanceState != null){
             mSavedName = savedInstanceState.getString(searchedName);
             mListaLivros = (ArrayList<Livro>)savedInstanceState.getSerializable("listalivros");
-          //  text1.setText(savedName);
+
         }
 
     }
@@ -69,9 +70,14 @@ public class ListaLivrosFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String pesquisaUsuario) {
 
-                    task = new DownloadLivrosTask();
-                    task.execute(pesquisaUsuario);
-                    mSavedName = pesquisaUsuario;
+                 task = new DownloadLivrosTask();
+
+
+                     if (!task.getStatus().equals(AsyncTask.Status.RUNNING)) {
+                          task.execute(pesquisaUsuario);
+                          mSavedName = pesquisaUsuario;
+                     }
+
 
                 return false;
             }
@@ -101,14 +107,6 @@ public class ListaLivrosFragment extends Fragment {
     }
 
 
-   /* @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_favorito) {
-
-
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -131,8 +129,7 @@ public class ListaLivrosFragment extends Fragment {
             }
         });
 
-        //preencherLista();
-        //Pesquisar no banco ---
+
 
         if (itens == null) {
             if (task == null) {
@@ -142,9 +139,7 @@ public class ListaLivrosFragment extends Fragment {
         }
         if (mListaLivros != null){
             listView.setAdapter(new LivrosAdapter(getActivity(), mListaLivros));
-       //   for ()
-          //  task = new DownloadLivrosTask();
-           // task.execute(mSavedName);
+
         }
         return view;
     }
@@ -174,25 +169,27 @@ public class ListaLivrosFragment extends Fragment {
 
         @Override
         protected void onPreExecute(){
-            progressDialog = ProgressDialog.show(getActivity(), "Aguarde...", "Carregando Livros...", true);
-            progressDialog.setCancelable(false);
+                progressDialog = ProgressDialog.show(getActivity(), "Aguarde...", "Carregando Livros...", true);
+                progressDialog.setCancelable(false);
         }
 
         @Override
         protected void onPostExecute(Itens itens) {
             super.onPostExecute(itens);
+
             progressDialog.dismiss();
+
             preencherLista();
         }
     }
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the user's current game state
+
         savedInstanceState.putString(searchedName, mSavedName);
 
         savedInstanceState.putSerializable("listalivros", (ArrayList<Livro>) mListaLivros);
        // savedInstanceState.putInt(STATE_LEVEL, mCurrentLevel);
-
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
@@ -201,6 +198,7 @@ public class ListaLivrosFragment extends Fragment {
     private void preencherLista() {
         List<Livro> livros = new ArrayList<>();
         if(itens != null) {
+            mListaLivros.clear();
             for (Livro livro : itens.livros) {
                 livros.add(livro);
                 mListaLivros.add(livro);
@@ -218,4 +216,16 @@ public class ListaLivrosFragment extends Fragment {
             ((AoClicarNoLivroListener)getActivity()).onLivroClick(livros.get(0));
         }
     }
+
+
+    @Override
+    public void onPause() {
+
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
+        super.onPause();
+    }
+
+
 }
