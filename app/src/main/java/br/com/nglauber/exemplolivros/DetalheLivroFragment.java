@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import br.com.nglauber.exemplolivros.data.LivrosDbHelper;
 import br.com.nglauber.exemplolivros.model.Livro;
+import br.com.nglauber.exemplolivros.model.Preco;
 import br.com.nglauber.exemplolivros.model.Volume;
 
 
@@ -26,6 +27,7 @@ public class DetalheLivroFragment extends Fragment {
 
     private Livro livro;
     private Volume volume;
+    private Preco preco;
     private MenuItem menuItemFavorito;
     private MenuItem menuItemVenda;
 
@@ -51,6 +53,7 @@ public class DetalheLivroFragment extends Fragment {
         this.livro = (Livro)getArguments().getSerializable("livro");
 
         volume = livro.volumes;
+        preco = livro.venda.preco;
 
         View view = inflater.inflate(R.layout.fragment_detalhe_livro, container, false);
 
@@ -65,6 +68,7 @@ public class DetalheLivroFragment extends Fragment {
         txtAno.setText(String.valueOf(volume.dataPublicacao));
         txtAutor.setText(volume.descricao);
         txtPaginas.setText(String.valueOf(volume.informacaoLink));
+
         Picasso.with(getActivity())
                 .load(livro.volumes.urlImagens.urlImagem)
                 .into(imgCapa);
@@ -77,8 +81,8 @@ public class DetalheLivroFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_detalhe_livro, menu);
 
+        //ITEM DO FAVORITO
         menuItemFavorito = menu.findItem(R.id.action_favorito);
-        menuItemVenda = menu.findItem(R.id.action_venda);
 
         if (isFavorito(this.livro)){
             menuItemFavorito.setIcon(R.drawable.ic_action_add_favorite);
@@ -86,11 +90,14 @@ public class DetalheLivroFragment extends Fragment {
             menuItemFavorito.setIcon(R.drawable.ic_action_remove_favorito);
         }
 
+        //ITEM DA VENDA DO LIVRO
+        menuItemVenda = menu.findItem(R.id.action_venda);
+        String compraDisponivel = getResources().getString(R.string.compra_disponivel);
 
         switch (livro.venda.status){
 
             case "FOR_SALE":
-                menuItemVenda.setTitle("Disponível para Compra");
+                menuItemVenda.setTitle(compraDisponivel +" - R$: " + livro.venda.preco.valor);
                 menuItemVenda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
@@ -103,12 +110,12 @@ public class DetalheLivroFragment extends Fragment {
                 });
                 break;
             case "FREE":
-                menuItemVenda.setTitle("Disponível Gratis");
+                menuItemVenda.setTitle(R.string.compra_disponivel_gratis);
                 menuItemVenda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         Intent intent = null;
-                        intent = new Intent(Intent.ACTION_VIEW,	Uri.parse(livro.venda.linkVenda));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(livro.venda.linkVenda));
 
                         startActivity(intent);
                         return false;
@@ -116,10 +123,10 @@ public class DetalheLivroFragment extends Fragment {
                 });
                 break;
             case "NOT_FOR_SALE":
-                menuItemVenda.setTitle("Indisponível para Compra");
+                menuItemVenda.setTitle(R.string.compra_indisponivel);
                 break;
             default:
-                menuItemVenda.setTitle("Não Informado");
+                menuItemVenda.setTitle(R.string.compra_nao_informada);
         }
 
 
@@ -139,6 +146,9 @@ public class DetalheLivroFragment extends Fragment {
             //SALVAR INFORMAÇÕES TAMBÉM DE VENDA DO LIVRO
             values.put(LivrosDbHelper.CAMPO_VENDA_LINK, livro.venda.linkVenda);
             values.put(LivrosDbHelper.CAMPO_VENDA_STATUS, livro.venda.status);
+            if(livro.venda.preco != null) {
+                values.put(LivrosDbHelper.CAMPO_VALOR_LIVRO, livro.venda.preco.valor);
+            }
 
             if (isFavorito(this.livro)) {
                 getActivity().getContentResolver().delete(
@@ -174,19 +184,5 @@ public class DetalheLivroFragment extends Fragment {
 
     }
 
-    /*private boolean isFavorito(Livro livro) {
-        Cursor cursor = getActivity().getContentResolver().query(
-                Uri.parse(LivrosDbHelper.ENDERECO_PROVIDER),
-                new String[]{ LivrosDbHelper.CAMPO_ID },
 
-                LivrosDbHelper.CAMPO_TITULO +" = ? and "  +
-                        LivrosDbHelper.CAMPO_DATA_PUBLICACAO + " = ?",
-
-                new String[]{ livro.volumes.titulo,"" },
-                null);
-        boolean existe = cursor.moveToNext();
-        cursor.close();
-        return existe;
-
-    }*/
 }

@@ -10,4 +10,11 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="splash">Splash</string>
+
+    <string name="compra_disponivel">Disponível para Compra</string>
+    <string name="compra_disponivel_gratis">Disponível Gratis</string>
+    <string name="compra_indisponivel">Indisponível para Compra</string>
+    <string name="compra_nao_informada">Não Informado</string>
+
+
 </resources>

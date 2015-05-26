@@ -17,6 +17,7 @@ import android.widget.ListView;
 import br.com.nglauber.exemplolivros.data.LivrosDbHelper;
 import br.com.nglauber.exemplolivros.model.Imagens;
 import br.com.nglauber.exemplolivros.model.Livro;
+import br.com.nglauber.exemplolivros.model.Preco;
 import br.com.nglauber.exemplolivros.model.Venda;
 import br.com.nglauber.exemplolivros.model.Volume;
 
@@ -52,6 +53,7 @@ public class FavoritosFragment extends Fragment
                 Volume volume = new Volume();
                 Imagens imagem = new Imagens();
                 Venda venda = new Venda();
+                Preco preco = new Preco();
 
                 volume.titulo = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_TITULO));
                 volume.informacaoLink = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_URL_LIVRO));
@@ -60,10 +62,12 @@ public class FavoritosFragment extends Fragment
                 imagem.urlImagem = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_CAPA));
                 venda.status = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_VENDA_STATUS));
                 venda.linkVenda = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_VENDA_LINK));
+                preco.valor = cursor.getString(cursor.getColumnIndex(LivrosDbHelper.CAMPO_VALOR_LIVRO));
 
                 livro.venda = venda;
                 livro.volumes = volume;
                 livro.volumes.urlImagens = imagem;
+                livro.venda.preco = preco;
 
                 if (getActivity() instanceof AoClicarNoLivroListener) {
                     ((AoClicarNoLivroListener)getActivity()).onLivroClick(livro);

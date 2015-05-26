@@ -19,5 +19,6 @@ public class Venda implements Serializable {
     public String status;
     @SerializedName("buyLink")
     public String linkVenda;
-
+    @SerializedName("listPrice")
+    public Preco preco;
 }

@@ -9,7 +9,7 @@ public class LivrosDbHelper extends SQLiteOpenHelper {
     public static final String ENDERECO_PROVIDER = "content://br.com.nglauber.livros";
 
     public static final String NOME_DO_BANCO = "dbLivros";
-    public static final int VERSAO_DO_BANCO = 1;
+    public static final int VERSAO_DO_BANCO = 2;
 
     public static final String TABELA_LIVROS = "favoritos";
     public static final String CAMPO_ID = "_id";
@@ -20,6 +20,7 @@ public class LivrosDbHelper extends SQLiteOpenHelper {
     public static final String CAMPO_URL_LIVRO = "url";
     public static final String CAMPO_VENDA_STATUS = "statusVenda";
     public static final String CAMPO_VENDA_LINK = "linkVenda";
+    public static final String CAMPO_VALOR_LIVRO = "valorLivro";
 
     public LivrosDbHelper(Context context) {
         super(context, NOME_DO_BANCO, null, VERSAO_DO_BANCO);
@@ -36,6 +37,7 @@ public class LivrosDbHelper extends SQLiteOpenHelper {
                         CAMPO_URL_LIVRO     +" TEXT," +
                         CAMPO_VENDA_LINK     +" TEXT," +
                         CAMPO_VENDA_STATUS     +" TEXT," +
+                        CAMPO_VALOR_LIVRO     +" TEXT," +
                         CAMPO_CAPA    +" TEXT)"
         );
     }
