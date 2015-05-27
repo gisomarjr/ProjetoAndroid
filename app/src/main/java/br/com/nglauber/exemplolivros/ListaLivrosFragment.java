@@ -1,6 +1,8 @@
 package br.com.nglauber.exemplolivros;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -63,10 +65,12 @@ public class ListaLivrosFragment extends Fragment {
         inflater.inflate(R.menu.menu_principal, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.setTitle("Pesquisar Livro");
+
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryHint("Pesquisar livro");
 
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String pesquisaUsuario) {
 
@@ -150,11 +154,14 @@ public class ListaLivrosFragment extends Fragment {
         protected Itens doInBackground(String... pesquisa) {
             OkHttpClient client = new OkHttpClient();
 
-            Request request = new Request.Builder()
-                    .url("https://www.googleapis.com/books/v1/volumes?q="+pesquisa[0]+"&key=AIzaSyCX-nh1USwGnZHsw1n3zbK97mttwqeiKwQ")
-                    .build();
 
             try {
+
+                Request request = new Request.Builder()
+                        .url("https://www.googleapis.com/books/v1/volumes?q="+java.net.URLEncoder.encode(pesquisa[0].toString(), "ISO-8859-1")+"&key=AIzaSyCX-nh1USwGnZHsw1n3zbK97mttwqeiKwQ")
+                        .build();
+
+
                 Response response = client.newCall(request).execute();
                 String json = response.body().string();
 
@@ -196,16 +203,30 @@ public class ListaLivrosFragment extends Fragment {
     }
 
     private void preencherLista() {
+
         List<Livro> livros = new ArrayList<>();
-        if(itens != null) {
+
+        if(itens.totalItens > 0) {
             mListaLivros.clear();
             for (Livro livro : itens.livros) {
                 livros.add(livro);
                 mListaLivros.add(livro);
             }
         }else{
-            Toast.makeText(getActivity(),"Não encontramos Resultados",Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Alerta")
+                    .setMessage("Sem resultados!")
+                    .setCancelable(false)
+                    .setNegativeButton("OK",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
+
+
 
         listView.setAdapter(new LivrosAdapter(getActivity(), livros));
 

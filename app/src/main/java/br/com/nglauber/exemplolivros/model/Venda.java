@@ -9,12 +9,7 @@ import java.io.Serializable;
  */
 public class Venda implements Serializable {
 
-    /**
-     * Status
-     * FOR_SALE
-     * FREE
-     * NOT_FOR_SALE
-     */
+
     @SerializedName("saleability")
     public String status;
     @SerializedName("buyLink")

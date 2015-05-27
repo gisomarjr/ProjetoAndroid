@@ -13,4 +13,8 @@ public class Itens implements Serializable {
     @SerializedName("items")
     public List<Livro> livros;
 
+    @SerializedName("totalItems")
+    public int totalItens;
+
+
 }
