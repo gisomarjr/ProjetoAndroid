@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
+
+
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
@@ -12,18 +14,26 @@
 
         <br.com.nglauber.exemplolivros.view.SlidingTabLayout
             android:id="@+id/tabs"
-            android:background="?attr/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary" />
+
+
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#CCCCCC" />
+
     <FrameLayout
+        android:id="@+id/container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:id="@+id/container"/>
+        android:layout_weight="3" />
 </LinearLayout>

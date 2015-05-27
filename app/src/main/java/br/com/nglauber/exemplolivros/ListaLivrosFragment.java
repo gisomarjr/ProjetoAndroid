@@ -38,6 +38,7 @@ public class ListaLivrosFragment extends Fragment {
     Itens itens;
     DownloadLivrosTask task;
     ProgressDialog progressDialog;
+    SearchView searchView;
     static String mSavedName;
     private String searchedName;
     static ArrayList<Livro> mListaLivros = new ArrayList<>();
@@ -67,7 +68,7 @@ public class ListaLivrosFragment extends Fragment {
         MenuItem searchItem = menu.findItem(R.id.action_search);
         searchItem.setTitle("Pesquisar Livro");
 
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint("Pesquisar livro");
 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -77,9 +78,10 @@ public class ListaLivrosFragment extends Fragment {
                  task = new DownloadLivrosTask();
 
 
-                     if (!task.getStatus().equals(AsyncTask.Status.RUNNING)) {
+                     if (!task.getStatus().equals(AsyncTask.Status.RUNNING) && pesquisaUsuario != "") {
                           task.execute(pesquisaUsuario);
                           mSavedName = pesquisaUsuario;
+                          searchView.setQuery("",true);
                      }
 
 
@@ -132,8 +134,6 @@ public class ListaLivrosFragment extends Fragment {
 
             }
         });
-
-
 
         if (itens == null) {
             if (task == null) {
@@ -206,24 +206,42 @@ public class ListaLivrosFragment extends Fragment {
 
         List<Livro> livros = new ArrayList<>();
 
-        if(itens.totalItens > 0) {
-            mListaLivros.clear();
-            for (Livro livro : itens.livros) {
-                livros.add(livro);
-                mListaLivros.add(livro);
-            }
-        }else{
+        if(itens == null){
+
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Alerta")
-                    .setMessage("Sem resultados!")
+            builder.setTitle("Conexão - Servidores")
+                    .setMessage("Por favor verifique sua conexão com a internet")
                     .setCancelable(false)
-                    .setNegativeButton("OK",new DialogInterface.OnClickListener() {
+                    .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
                     });
             AlertDialog alert = builder.create();
             alert.show();
+
+        }else {
+
+            if (itens.totalItens > 0) {
+                mListaLivros.clear();
+                for (Livro livro : itens.livros) {
+                    livros.add(livro);
+                    mListaLivros.add(livro);
+                }
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Alerta")
+                        .setMessage("Sem resultados!")
+                        .setCancelable(false)
+                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
         }
 
 
@@ -234,6 +252,7 @@ public class ListaLivrosFragment extends Fragment {
         if (getActivity() instanceof AoClicarNoLivroListener
                 && getResources().getBoolean(R.bool.isTablet)
                 && livros.size() > 0){
+
             ((AoClicarNoLivroListener)getActivity()).onLivroClick(livros.get(0));
         }
     }
