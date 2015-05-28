@@ -3,6 +3,7 @@ package br.com.nglauber.exemplolivros;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,6 +56,8 @@ public class DetalheLivroFragment extends Fragment {
 
         volume = livro.volumes;
         preco = livro.venda.preco;
+//        String valor = preco.valor;
+//        String status = livro.venda.status;
 
         View view = inflater.inflate(R.layout.fragment_detalhe_livro, container, false);
 
@@ -62,13 +66,58 @@ public class DetalheLivroFragment extends Fragment {
         TextView txtAno = (TextView)view.findViewById(R.id.txtAno);
         TextView txtAutor = (TextView)view.findViewById(R.id.txtAutor);
         TextView txtPaginas = (TextView)view.findViewById(R.id.txtPaginas);
+        TextView txtPreco = (TextView) view.findViewById(R.id.txtPreco);
+        Button btnCompra = (Button) view.findViewById(R.id.btnComprar);
 
         //Picasso.with(getActivity()).load(livro.capa).into(imgCapa);
         txtTitulo.setText(volume.titulo);
         txtAno.setText(String.valueOf(volume.dataPublicacao));
         txtAutor.setText(volume.descricao);
-        txtPaginas.setText(String.valueOf(volume.informacaoLink));
+        switch (livro.venda.status){
 
+            case "FOR_SALE":
+                txtPreco.setText(" - R$: " + livro.venda.preco.valor);
+                btnCompra.setBackgroundColor(Color.parseColor("#00EE00"));
+                btnCompra.setTextColor(Color.parseColor("#FFFFFF"));
+                btnCompra.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = null;
+                        intent = new Intent(Intent.ACTION_VIEW,	Uri.parse(livro.venda.linkVenda));
+
+                        startActivity(intent);
+
+                    }
+                })
+                ;
+                break;
+            case "FREE":
+                txtPreco.setText(R.string.compra_disponivel_gratis);
+                btnCompra.setBackgroundColor(Color.parseColor("#00EE00"));
+                btnCompra.setText("Adquirir");
+                btnCompra.setTextColor(Color.parseColor("#FFFFFF"));
+                btnCompra.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = null;
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(livro.venda.linkVenda));
+
+                        startActivity(intent);
+
+                    }
+                })
+                ;
+                break;
+            case "NOT_FOR_SALE":
+                txtPreco.setText(R.string.compra_indisponivel);
+                btnCompra.setClickable(false);
+                btnCompra.setText("Não disponível");
+                btnCompra.setTextColor(Color.parseColor("#C3C3C3"));
+
+                break;
+            default:
+                txtPreco.setText(R.string.compra_nao_informada);
+        }
         Picasso.with(getActivity())
                 .load(livro.volumes.urlImagens.urlImagem)
                 .into(imgCapa);
