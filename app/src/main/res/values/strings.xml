@@ -15,6 +15,7 @@
     <string name="compra_disponivel_gratis">Disponível Gratis</string>
     <string name="compra_indisponivel">Indisponível para Compra</string>
     <string name="compra_nao_informada">Não Informado</string>
+    <string name="action_share">Compartilhar</string>
 
 
 </resources>

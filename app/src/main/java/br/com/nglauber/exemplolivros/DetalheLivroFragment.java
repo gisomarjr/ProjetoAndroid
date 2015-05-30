@@ -7,6 +7,9 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,13 +30,16 @@ import br.com.nglauber.exemplolivros.model.Volume;
 
 public class DetalheLivroFragment extends Fragment {
 
+    private static final String LIVROS_SHARE_HASHTAG = "#WorldsBooks ";
+    private static final String SHARE_DEFAULT_TEXT = "Acabo de adicionar este livro aos meus favoritos: ";
+    private static final String LOG_TAG = DetalheLivroFragment.class.getSimpleName();
     private Livro livro;
     private Volume volume;
     private Preco preco;
     private MenuItem menuItemFavorito;
     private MenuItem menuItemVenda;
 
-    public static DetalheLivroFragment novaInstancia(Livro livro){
+    public static DetalheLivroFragment novaInstancia(Livro livro) {
         DetalheLivroFragment dlf = new DetalheLivroFragment();
         Bundle args = new Bundle();
         args.putSerializable("livro", livro);
@@ -52,7 +58,7 @@ public class DetalheLivroFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        this.livro = (Livro)getArguments().getSerializable("livro");
+        this.livro = (Livro) getArguments().getSerializable("livro");
 
         volume = livro.volumes;
         preco = livro.venda.preco;
@@ -61,11 +67,11 @@ public class DetalheLivroFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_detalhe_livro, container, false);
 
-        ImageView imgCapa = (ImageView)view.findViewById(R.id.imgCapa);
-        TextView txtTitulo = (TextView)view.findViewById(R.id.txtTitulo);
-        TextView txtAno = (TextView)view.findViewById(R.id.txtAno);
-        TextView txtAutor = (TextView)view.findViewById(R.id.txtAutor);
-        TextView txtPaginas = (TextView)view.findViewById(R.id.txtPaginas);
+        ImageView imgCapa = (ImageView) view.findViewById(R.id.imgCapa);
+        TextView txtTitulo = (TextView) view.findViewById(R.id.txtTitulo);
+        TextView txtAno = (TextView) view.findViewById(R.id.txtAno);
+        TextView txtAutor = (TextView) view.findViewById(R.id.txtAutor);
+        TextView txtPaginas = (TextView) view.findViewById(R.id.txtPaginas);
         TextView txtPreco = (TextView) view.findViewById(R.id.txtPreco);
         Button btnCompra = (Button) view.findViewById(R.id.btnComprar);
 
@@ -73,7 +79,7 @@ public class DetalheLivroFragment extends Fragment {
         txtTitulo.setText(volume.titulo);
         txtAno.setText(String.valueOf(volume.dataPublicacao));
         txtAutor.setText(volume.descricao);
-        switch (livro.venda.status){
+        switch (livro.venda.status) {
 
             case "FOR_SALE":
                 txtPreco.setText(" - R$: " + livro.venda.preco.valor);
@@ -83,7 +89,7 @@ public class DetalheLivroFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Intent intent = null;
-                        intent = new Intent(Intent.ACTION_VIEW,	Uri.parse(livro.venda.linkVenda));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(livro.venda.linkVenda));
 
                         startActivity(intent);
 
@@ -129,11 +135,24 @@ public class DetalheLivroFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_detalhe_livro, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+
+        // Get the provider and hold onto it to set/change the share intent.
+        ShareActionProvider mShareActionProvider =
+                (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+        // Attach an intent to this ShareActionProvider.  You can update this at any time,
+        // like when the user selects a new piece of data they might like to share.
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(createShareForecastIntent());
+        } else {
+            Log.d(LOG_TAG, "Share Action Provider is null?");
+        }
 
         //ITEM DO FAVORITO
         menuItemFavorito = menu.findItem(R.id.action_favorito);
 
-        if (isFavorito(this.livro)){
+        if (isFavorito(this.livro)) {
             menuItemFavorito.setIcon(R.drawable.ic_action_add_favorite);
         } else {
             menuItemFavorito.setIcon(R.drawable.ic_action_remove_favorito);
@@ -143,15 +162,15 @@ public class DetalheLivroFragment extends Fragment {
         menuItemVenda = menu.findItem(R.id.action_venda);
         String compraDisponivel = getResources().getString(R.string.compra_disponivel);
 
-        switch (livro.venda.status){
+        switch (livro.venda.status) {
 
             case "FOR_SALE":
-                menuItemVenda.setTitle(compraDisponivel +" - R$: " + livro.venda.preco.valor);
+                menuItemVenda.setTitle(compraDisponivel + " - R$: " + livro.venda.preco.valor);
                 menuItemVenda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         Intent intent = null;
-                        intent = new Intent(Intent.ACTION_VIEW,	Uri.parse(livro.venda.linkVenda));
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(livro.venda.linkVenda));
 
                         startActivity(intent);
                         return false;
@@ -177,9 +196,22 @@ public class DetalheLivroFragment extends Fragment {
             default:
                 menuItemVenda.setTitle(R.string.compra_nao_informada);
         }
-
-
     }
+
+    private Intent createShareForecastIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT,
+                SHARE_DEFAULT_TEXT + " \r\n " + livro.volumes.titulo + " \r\n "
+                +livro.volumes.informacaoLink + " \r\n \r\n" + LIVROS_SHARE_HASHTAG );
+        return shareIntent;
+    }
+
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
