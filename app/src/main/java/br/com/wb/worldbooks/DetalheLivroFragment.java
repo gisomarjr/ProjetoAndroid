@@ -29,8 +29,10 @@ import br.com.wb.worldbooks.model.Volume;
 
 public class DetalheLivroFragment extends Fragment {
 
+
+
     private static final String LIVROS_SHARE_HASHTAG = "#WorldsBooks ";
-    private static final String SHARE_DEFAULT_TEXT = "Acabo de adicionar este livro aos meus favoritos: ";
+    private static String SHARE_DEFAULT_TEXT = "";
     private static final String LOG_TAG = DetalheLivroFragment.class.getSimpleName();
     private Livro livro;
     private Volume volume;
@@ -51,6 +53,9 @@ public class DetalheLivroFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
+
+        String compartilhar = getResources().getString(R.string.texto_compartilhar);
+        SHARE_DEFAULT_TEXT = compartilhar;
     }
 
     @Override

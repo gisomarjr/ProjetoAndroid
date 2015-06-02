@@ -139,7 +139,7 @@ public class ListaLivrosFragment extends Fragment {
 
         if (itens == null) {
             if (task == null) {
-                Toast.makeText(getActivity(), "Para começar, clique na lupa e digite a busca.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.comecar, Toast.LENGTH_LONG).show();
             }
 
         }
@@ -178,7 +178,11 @@ public class ListaLivrosFragment extends Fragment {
 
         @Override
         protected void onPreExecute(){
-                progressDialog = ProgressDialog.show(getActivity(), "Aguarde...", "Carregando Livros...", true);
+
+                String aguarde = getResources().getString(R.string.aguarde);
+                String carregando = getResources().getString(R.string.carregando_livros);
+
+                progressDialog = ProgressDialog.show(getActivity(), aguarde, carregando, true);
                 progressDialog.setCancelable(false);
         }
 
@@ -211,8 +215,8 @@ public class ListaLivrosFragment extends Fragment {
         if(itens == null){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Conexão - Servidores")
-                    .setMessage("Por favor verifique sua conexão com a internet")
+            builder.setTitle(R.string.conexao)
+                    .setMessage(R.string.verificar_conexao)
                     .setCancelable(false)
                     .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -232,8 +236,8 @@ public class ListaLivrosFragment extends Fragment {
                 }
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Alerta")
-                        .setMessage("Sem resultados!")
+                builder.setTitle(R.string.alerta)
+                        .setMessage(R.string.sem_resultados)
                         .setCancelable(false)
                         .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
