@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "br.com.nglauber.exemplolivros"
+        applicationId "br.com.wb.worldbooks"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1

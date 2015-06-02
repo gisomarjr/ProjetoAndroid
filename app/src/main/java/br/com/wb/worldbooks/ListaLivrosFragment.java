@@ -1,4 +1,4 @@
-package br.com.nglauber.exemplolivros;
+package br.com.wb.worldbooks;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -28,8 +28,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.nglauber.exemplolivros.model.Itens;
-import br.com.nglauber.exemplolivros.model.Livro;
+import br.com.wb.worldbooks.model.Itens;
+import br.com.wb.worldbooks.model.Livro;
 
 
 public class ListaLivrosFragment extends Fragment {
@@ -65,11 +65,13 @@ public class ListaLivrosFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_principal, menu);
 
+
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchItem.setTitle("Pesquisar Livro");
+        searchItem.setTitle(R.string.pesquisar_livro);
 
         searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryHint("Pesquisar livro");
+        searchView.setQueryHint(getResources().getString(R.string.pesquisar_livro));
 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

@@ -1,4 +1,4 @@
-package br.com.nglauber.exemplolivros;
+package br.com.wb.worldbooks;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import br.com.nglauber.exemplolivros.data.LivrosDbHelper;
+import br.com.wb.worldbooks.data.LivrosDbHelper;
 
 public class LivroCursorAdapter extends CursorAdapter {
 

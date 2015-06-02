@@ -1,4 +1,4 @@
-package br.com.nglauber.exemplolivros;
+package br.com.wb.worldbooks;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import br.com.nglauber.exemplolivros.model.Imagens;
-import br.com.nglauber.exemplolivros.model.Livro;
-import br.com.nglauber.exemplolivros.model.Volume;
+import br.com.wb.worldbooks.model.Imagens;
+import br.com.wb.worldbooks.model.Livro;
+import br.com.wb.worldbooks.model.Volume;
 
 public class LivrosAdapter extends ArrayAdapter<Livro>{
 

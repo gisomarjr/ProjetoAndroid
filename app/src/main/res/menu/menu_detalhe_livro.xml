@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="br.com.nglauber.exemplolivros.DetalheLivroActivity"
+    tools:context="br.com.wb.worldbooks.DetalheLivroActivity"
      >
     <item
         android:id="@+id/action_favorito"
@@ -12,7 +12,7 @@
     <item
         android:id="@+id/action_venda"
         android:orderInCategory="100"
-        android:title="venda"
+        android:title="@string/comprar"
         app:showAsAction="always|withText" />
 
     <item android:id="@+id/action_share"

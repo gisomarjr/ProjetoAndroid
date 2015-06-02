@@ -1,4 +1,4 @@
-package br.com.nglauber.exemplolivros.model;
+package br.com.wb.worldbooks.model;
 
 import com.google.gson.annotations.SerializedName;
 

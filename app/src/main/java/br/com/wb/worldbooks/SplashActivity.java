@@ -1,4 +1,4 @@
-package br.com.nglauber.exemplolivros;
+package br.com.wb.worldbooks;
 
 import android.app.Activity;
 import android.content.Intent;

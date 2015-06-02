@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Worlds Books</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_detalhe_livro">Detalhe</string>
+    <string name="title_activity_detalhe_livro">Sua escolha</string>
     <string name="favorito">Favorito</string>
 
     <string name="tab_livros">Livros</string>
@@ -16,6 +16,8 @@
     <string name="compra_indisponivel">Indisponível para Compra</string>
     <string name="compra_nao_informada">Não Informado</string>
     <string name="action_share">Compartilhar</string>
+    <string name="comprar">Comprar</string>
+    <string name="pesquisar_livro">Pesquisar Livro</string>
 
 
 </resources>

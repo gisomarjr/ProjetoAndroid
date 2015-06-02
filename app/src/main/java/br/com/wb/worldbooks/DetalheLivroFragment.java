@@ -1,9 +1,8 @@
-package br.com.nglauber.exemplolivros;
+package br.com.wb.worldbooks;
 
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,16 +15,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import br.com.nglauber.exemplolivros.data.LivrosDbHelper;
-import br.com.nglauber.exemplolivros.model.Livro;
-import br.com.nglauber.exemplolivros.model.Preco;
-import br.com.nglauber.exemplolivros.model.Volume;
+import br.com.wb.worldbooks.data.LivrosDbHelper;
+import br.com.wb.worldbooks.model.Livro;
+import br.com.wb.worldbooks.model.Preco;
+import br.com.wb.worldbooks.model.Volume;
 
 
 public class DetalheLivroFragment extends Fragment {
@@ -62,8 +61,7 @@ public class DetalheLivroFragment extends Fragment {
 
         volume = livro.volumes;
         preco = livro.venda.preco;
-//        String valor = preco.valor;
-//        String status = livro.venda.status;
+
 
         View view = inflater.inflate(R.layout.fragment_detalhe_livro, container, false);
 
@@ -72,62 +70,25 @@ public class DetalheLivroFragment extends Fragment {
         TextView txtAno = (TextView) view.findViewById(R.id.txtAno);
         TextView txtAutor = (TextView) view.findViewById(R.id.txtAutor);
         TextView txtPaginas = (TextView) view.findViewById(R.id.txtPaginas);
-        TextView txtPreco = (TextView) view.findViewById(R.id.txtPreco);
-        Button btnCompra = (Button) view.findViewById(R.id.btnComprar);
+
+
 
         //Picasso.with(getActivity()).load(livro.capa).into(imgCapa);
         txtTitulo.setText(volume.titulo);
         txtAno.setText(String.valueOf(volume.dataPublicacao));
         txtAutor.setText(volume.descricao);
-        switch (livro.venda.status) {
+        txtPaginas.setText(volume.informacaoLink);
 
-            case "FOR_SALE":
-                txtPreco.setText(" - R$: " + livro.venda.preco.valor);
-                btnCompra.setBackgroundColor(Color.parseColor("#00EE00"));
-                btnCompra.setTextColor(Color.parseColor("#FFFFFF"));
-                btnCompra.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = null;
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(livro.venda.linkVenda));
-
-                        startActivity(intent);
-
-                    }
-                })
-                ;
-                break;
-            case "FREE":
-                txtPreco.setText(R.string.compra_disponivel_gratis);
-                btnCompra.setBackgroundColor(Color.parseColor("#00EE00"));
-                btnCompra.setText("Adquirir");
-                btnCompra.setTextColor(Color.parseColor("#FFFFFF"));
-                btnCompra.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = null;
-                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse(livro.venda.linkVenda));
-
-                        startActivity(intent);
-
-                    }
-                })
-                ;
-                break;
-            case "NOT_FOR_SALE":
-                txtPreco.setText(R.string.compra_indisponivel);
-                btnCompra.setClickable(false);
-                btnCompra.setText("Não disponível");
-                btnCompra.setTextColor(Color.parseColor("#C3C3C3"));
-
-                break;
-            default:
-                txtPreco.setText(R.string.compra_nao_informada);
+        if(livro.volumes.urlImagens != null) {
+            Picasso.with(getActivity())
+                    .load(livro.volumes.urlImagens.urlImagem)
+                    .into(imgCapa);
+        }else{
+            //imagem caso o não encontre o livro
+            Picasso.with(getActivity())
+                    .load("http://rlv.zcache.com.br/ponto_de_interrogacao_dos_desenhos_animados_papel_timbrado-ra082215bdfb44a0d9fc49d7ba691a9df_vg63g_8byvr_512.jpg")
+                    .into(imgCapa);
         }
-        Picasso.with(getActivity())
-                .load(livro.volumes.urlImagens.urlImagem)
-                .into(imgCapa);
-
         return view;
     }
 
@@ -165,7 +126,8 @@ public class DetalheLivroFragment extends Fragment {
         switch (livro.venda.status) {
 
             case "FOR_SALE":
-                menuItemVenda.setTitle(compraDisponivel + " - R$: " + livro.venda.preco.valor);
+                menuItemVenda.setIcon(R.drawable.carrinho_disponivel);
+
                 menuItemVenda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
@@ -178,7 +140,8 @@ public class DetalheLivroFragment extends Fragment {
                 });
                 break;
             case "FREE":
-                menuItemVenda.setTitle(R.string.compra_disponivel_gratis);
+                menuItemVenda.setIcon(R.drawable.carrinho_disponivel);
+
                 menuItemVenda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
@@ -191,10 +154,31 @@ public class DetalheLivroFragment extends Fragment {
                 });
                 break;
             case "NOT_FOR_SALE":
-                menuItemVenda.setTitle(R.string.compra_indisponivel);
+                menuItemVenda.setIcon(R.drawable.carrinho_indisponivel);
+
+                menuItemVenda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+
+                        Toast.makeText(getActivity(),R.string.compra_indisponivel,Toast.LENGTH_LONG).show();
+
+                        return false;
+                    }
+                });
                 break;
+
             default:
-                menuItemVenda.setTitle(R.string.compra_nao_informada);
+                menuItemVenda.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+
+                        Toast.makeText(getActivity(),R.string.compra_indisponivel,Toast.LENGTH_LONG).show();
+
+                        return false;
+                    }
+                });
+                break;
+
         }
     }
 

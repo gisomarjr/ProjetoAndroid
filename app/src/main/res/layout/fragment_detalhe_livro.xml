@@ -12,7 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="br.com.nglauber.exemplolivros.DetalheLivroFragment">
+    tools:context="br.com.wb.worldbooks.DetalheLivroFragment">
 
 
     <ImageView
@@ -48,20 +48,9 @@
         android:text="New Text"
         android:id="@+id/txtPaginas"
         android:autoLink="web"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:gravity="center"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/txtPreco"
-       />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnComprar"
-        android:text="Comprar"
-        />
-    </LinearLayout>
+</LinearLayout>
 
 </ScrollView>

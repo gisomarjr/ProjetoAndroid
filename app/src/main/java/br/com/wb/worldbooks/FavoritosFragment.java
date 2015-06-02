@@ -1,4 +1,4 @@
-package br.com.nglauber.exemplolivros;
+package br.com.wb.worldbooks;
 
 
 import android.database.Cursor;
@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import br.com.nglauber.exemplolivros.data.LivrosDbHelper;
-import br.com.nglauber.exemplolivros.model.Imagens;
-import br.com.nglauber.exemplolivros.model.Livro;
-import br.com.nglauber.exemplolivros.model.Preco;
-import br.com.nglauber.exemplolivros.model.Venda;
-import br.com.nglauber.exemplolivros.model.Volume;
+import br.com.wb.worldbooks.data.LivrosDbHelper;
+import br.com.wb.worldbooks.model.Imagens;
+import br.com.wb.worldbooks.model.Livro;
+import br.com.wb.worldbooks.model.Preco;
+import br.com.wb.worldbooks.model.Venda;
+import br.com.wb.worldbooks.model.Volume;
 
 //LoaderManager busca em background
 public class FavoritosFragment extends Fragment

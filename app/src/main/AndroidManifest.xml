@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.nglauber.exemplolivros" >
+    package="br.com.wb.worldbooks" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -33,12 +33,12 @@
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.nglauber.exemplolivros.MainActivity" />
+                android:value="br.com.wb.worldbooks.MainActivity" />
         </activity>
 
         <provider
             android:name=".data.LivrosProvider"
-            android:authorities="br.com.nglauber.livros"
+            android:authorities="br.com.wb.worldbooks.livros"
             android:enabled="true"
             android:exported="false" >
         </provider>

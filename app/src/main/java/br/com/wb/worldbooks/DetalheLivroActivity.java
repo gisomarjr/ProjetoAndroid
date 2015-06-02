@@ -1,9 +1,9 @@
-package br.com.nglauber.exemplolivros;
+package br.com.wb.worldbooks;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import br.com.nglauber.exemplolivros.model.Livro;
+import br.com.wb.worldbooks.model.Livro;
 
 
 public class DetalheLivroActivity extends AppCompatActivity {

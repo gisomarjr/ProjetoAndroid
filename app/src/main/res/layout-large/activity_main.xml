@@ -12,7 +12,7 @@
         android:layout_weight="2"
         android:orientation="vertical">
 
-        <br.com.nglauber.exemplolivros.view.SlidingTabLayout
+        <br.com.wb.worldbooks.view.SlidingTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

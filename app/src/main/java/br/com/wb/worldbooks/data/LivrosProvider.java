@@ -1,4 +1,4 @@
-package br.com.nglauber.exemplolivros.data;
+package br.com.wb.worldbooks.data;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;

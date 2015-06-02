@@ -1,4 +1,4 @@
-package br.com.nglauber.exemplolivros;
+package br.com.wb.worldbooks;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import br.com.nglauber.exemplolivros.model.Livro;
-import br.com.nglauber.exemplolivros.view.SlidingTabLayout;
+import br.com.wb.worldbooks.model.Livro;
+import br.com.wb.worldbooks.view.SlidingTabLayout;
 
 
 public class MainActivity extends AppCompatActivity implements AoClicarNoLivroListener {

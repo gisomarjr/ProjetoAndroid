@@ -1,4 +1,4 @@
-package br.com.nglauber.exemplolivros.data;
+package br.com.wb.worldbooks.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class LivrosDbHelper extends SQLiteOpenHelper {
 
-    public static final String ENDERECO_PROVIDER = "content://br.com.nglauber.livros";
+    public static final String ENDERECO_PROVIDER = "content://br.com.wb.worldbooks.livros";
 
     public static final String NOME_DO_BANCO = "dbLivros";
     public static final int VERSAO_DO_BANCO = 1;

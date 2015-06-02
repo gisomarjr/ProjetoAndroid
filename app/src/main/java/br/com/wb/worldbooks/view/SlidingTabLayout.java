@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package br.com.nglauber.exemplolivros.view;
+package br.com.wb.worldbooks.view;
 
 import android.content.Context;
 import android.graphics.Color;
